@@ -23,7 +23,7 @@ export const QRGenerator = () => {
   const [bgColor, setBgColor] = useState("#ffffff");
   const qrRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
 
   const handleGenerate = () => {
     if (!inputValue.trim()) {
@@ -198,10 +198,10 @@ export const QRGenerator = () => {
             variant="ghost"
             size="icon"
             className="text-white hover:bg-white/20"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
             aria-label="Toggle theme"
           >
-            {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            {resolvedTheme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </Button>
         </div>
       </CardHeader>
