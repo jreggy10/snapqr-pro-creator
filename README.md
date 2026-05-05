@@ -1,174 +1,129 @@
-# SnapQR Pro Creator
+# SnapQR
 
-A modern, feature-rich QR code generator built with React, TypeScript, and Tailwind CSS. Create custom QR codes instantly with advanced options like logo embedding, custom text, and adjustable resolution.
+A modern, feature-rich QR code generator built with React and TypeScript. Generate custom QR codes instantly — add logos, pick colors, adjust resolution, and export as PNG or SVG.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ## Features
 
-- **Instant QR Generation**: Generate QR codes from text or URLs in seconds
-- **Custom Text**: Add custom text below your QR codes
-- **Logo Integration**: Embed logos directly into QR codes
-- **Adjustable Resolution**: Export QR codes in various resolutions (100px - 1000px)
-- **Multiple Export Options**: Download as PNG or copy to clipboard
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **Modern UI**: Built with shadcn/ui components and Tailwind CSS
-- **Keyboard Support**: Press Enter to generate QR codes quickly
+- **Instant QR Generation** — generate from any text or URL
+- **Color Customization** — set custom foreground and background colors
+- **Logo Embedding** — embed any image URL as a centered logo
+- **Custom Text** — add a label below the QR code
+- **Adjustable Resolution** — export from 100px to 1000px
+- **PNG & SVG Export** — download as raster or vector, or copy to clipboard
+- **Dark Mode** — toggle light/dark theme
+- **Responsive** — works on desktop and mobile
+- **Keyboard Shortcut** — press Enter to generate
 
-## Technology Stack
+## Tech Stack
 
-- **Framework**: React 18.3.1 with TypeScript
-- **Build Tool**: Vite
-- **UI Components**: shadcn/ui
-- **Styling**: Tailwind CSS
-- **QR Generation**: qrcode.react
-- **State Management**: React Hooks with TanStack Query
-- **Routing**: React Router DOM
-- **Icons**: Lucide React
-- **Form Handling**: React Hook Form with Zod validation
+- [React 18](https://react.dev/) + TypeScript
+- [Vite](https://vitejs.dev/) (build tool)
+- [shadcn/ui](https://ui.shadcn.com/) + [Tailwind CSS](https://tailwindcss.com/)
+- [qrcode.react](https://github.com/zpao/qrcode.react) (QR generation)
+- [next-themes](https://github.com/pacocoursey/next-themes) (dark mode)
+- [Lucide React](https://lucide.dev/) (icons)
 
-## Quick Start
+## Getting Started
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- npm or yarn
+- Node.js v18 or higher
+- npm, yarn, or bun
 
 ### Installation
 
-1. Clone the repository:
 ```bash
-git clone <YOUR_GIT_URL>
+git clone https://github.com/jreggy10/snapqr-pro-creator.git
 cd snapqr-pro-creator
-```
-
-2. Install dependencies:
-```bash
 npm install
-```
-
-3. Start the development server:
-```bash
 npm run dev
 ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+Open [http://localhost:8080](http://localhost:8080) in your browser.
 
 ## Usage
 
-### Basic QR Code Generation
+### Basic
 
 1. Enter any text or URL in the input field
-2. Click "Generate QR Code" or press Enter
-3. Your QR code will appear instantly
+2. Click **Generate QR Code** or press Enter
+3. Your QR code appears instantly
 
 ### Advanced Options
 
-Click on "Advanced Options" to access:
+Expand **Advanced Options** to access:
 
-- **Custom Text**: Add text below your QR code
-- **Logo URL**: Enter a URL to an image to embed as a logo
-- **Show Logo**: Toggle to enable/disable logo embedding
-- **Export Resolution**: Adjust the size of your exported QR code (100px - 1000px)
+| Option | Description |
+|--------|-------------|
+| Custom Text | Label displayed below the QR code |
+| Logo URL | Image URL to embed as a centered logo |
+| Show Logo | Toggle logo visibility |
+| Foreground Color | QR code dot color |
+| Background Color | QR code background color |
+| Export Resolution | Output size in pixels (100–1000px) |
 
-### Export Options
+### Export
 
-Once you've generated a QR code:
-
-- **Copy**: Copy the QR code to your clipboard
-- **Download**: Save the QR code as a PNG file
+| Button | Output |
+|--------|--------|
+| Copy | Copies QR code to clipboard as PNG |
+| PNG | Downloads a PNG file at selected resolution |
+| SVG | Downloads a scalable vector SVG |
 
 ## Available Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run build:dev` - Build for development
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
+```bash
+npm run dev       # Start dev server
+npm run build     # Production build
+npm run preview   # Preview production build
+npm run lint      # Run ESLint
+```
 
 ## Project Structure
 
 ```
 src/
 ├── components/
-│   ├── QRGenerator.tsx    # Main QR code generator component
+│   ├── QRGenerator.tsx    # Main QR code generator
 │   └── ui/                # shadcn/ui components
 ├── hooks/
-│   ├── use-mobile.tsx     # Mobile detection hook
-│   └── use-toast.ts       # Toast notification hook
+│   ├── use-mobile.tsx
+│   └── use-toast.ts
 ├── lib/
-│   └── utils.ts           # Utility functions
+│   └── utils.ts
 ├── pages/
-│   ├── Index.tsx          # Home page
-│   └── NotFound.tsx       # 404 page
-├── App.tsx                # Main app component
-├── main.tsx               # App entry point
-└── vite-env.d.ts          # Vite type definitions
+│   ├── Index.tsx
+│   └── NotFound.tsx
+├── App.tsx
+└── main.tsx
 ```
-
-## Development
-
-### Code Quality
-
-The project includes:
-- TypeScript for type safety
-- ESLint for code linting
-- Prettier for code formatting
-- React best practices
-
-### Component Architecture
-
-- **QRGenerator**: Main component handling QR code generation, state management, and user interactions
-- **UI Components**: Reusable shadcn/ui components for consistent design
-- **Hooks**: Custom hooks for reusable logic
 
 ## Deployment
 
-### Using Lovable
+Build the app and deploy the `dist` folder to any static host:
 
-1. Visit your [Lovable Project](https://lovable.dev/projects/3c1ceab0-b631-4d10-9c4a-394319f6f1c8)
-2. Click on Share → Publish
-3. Your app will be deployed automatically
-
-### Manual Deployment
-
-1. Build the application:
 ```bash
 npm run build
 ```
 
-2. Deploy the `dist` folder to your preferred hosting service (Vercel, Netlify, etc.)
-
-## Custom Domain
-
-To connect a custom domain:
-1. Navigate to Project → Settings → Domains in Lovable
-2. Click "Connect Domain"
-3. Follow the instructions to set up your custom domain
+**Vercel** — connect the repo and it deploys automatically on push.  
+**Netlify** — drag and drop the `dist` folder, or connect via Git.  
+**GitHub Pages** — use the [vite-plugin-gh-pages](https://github.com/nekomeowww/vite-plugin-gh-pages) or the official Actions workflow.
 
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Make your changes and commit them: `git commit -m 'Add feature'`
-4. Push to the branch: `git push origin feature-name`
-5. Submit a pull request
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m 'Add your feature'`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Open a pull request
 
 ## License
 
-This project is private and proprietary.
+[MIT](LICENSE)
 
 ## Support
 
-For support or questions:
-- Visit the [Lovable Project](https://lovable.dev/projects/3c1ceab0-b631-4d10-9c4a-394319f6f1c8)
-- Check the documentation
-- Open an issue in the repository
-
-## Future Enhancements
-
-- Batch QR code generation
-- QR code analytics
-- More customization options (colors, shapes)
-- QR code scanning functionality
-- Export to multiple formats (SVG, PDF)
-- QR code templates
-- API integration for dynamic QR codes
+Open an [issue](https://github.com/jreggy10/snapqr-pro-creator/issues) for bug reports or feature requests.
