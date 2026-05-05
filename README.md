@@ -2,7 +2,10 @@
 
 A modern, feature-rich QR code generator built with React and TypeScript. Generate custom QR codes instantly — add logos, pick colors, adjust resolution, and export as PNG or SVG.
 
+**[Live Demo →](https://qr.jregs.com)**
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://qr.jregs.com)
 
 ## Features
 
