@@ -7,6 +7,7 @@ import type { QRDesign } from "@/lib/qr/types";
 import type { ScanLevel } from "@/lib/qr/scannability";
 import { downloadBlob, shareOrDownload, slugify } from "@/lib/export/files";
 import type { PdfPreset } from "@/lib/export/pdf";
+import { track, type ExportFormat } from "@/lib/analytics";
 
 type Job = "png" | "svg" | "pdf" | "card" | "copy";
 
@@ -27,6 +28,10 @@ export const ExportBar = memo(function ExportBar({ payload, design, scanLevel }:
   const disabled = !payload || busy !== null;
   const base = slugify(design.card.title || design.caption || `${design.type}-qr`);
 
+  // Counted only after the export succeeds; labels only, never content.
+  const counted = (format: ExportFormat) =>
+    track("export", { format, type: design.type, scan: scanLevel, logo: Boolean(design.style.logo) });
+
   const run = async (job: Job, task: () => Promise<string | void>) => {
     if (scanLevel === "fail") toast.warning("Heads up: this design may not scan. Test it before printing.");
     setBusy(job);
@@ -45,6 +50,7 @@ export const ExportBar = memo(function ExportBar({ payload, design, scanLevel }:
     run("png", async () => {
       const { exportPng } = await import("@/lib/export/image");
       downloadBlob(await exportPng(payload, design), `${base}.png`);
+      counted("png");
       return "PNG downloaded";
     });
 
@@ -53,6 +59,7 @@ export const ExportBar = memo(function ExportBar({ payload, design, scanLevel }:
       const { exportSvgText } = await import("@/lib/export/image");
       const text = await exportSvgText(payload, design);
       downloadBlob(new Blob([text], { type: "image/svg+xml" }), `${base}.svg`);
+      counted("svg");
       return "SVG downloaded";
     });
 
@@ -60,6 +67,7 @@ export const ExportBar = memo(function ExportBar({ payload, design, scanLevel }:
     run("pdf", async () => {
       const { exportPdf } = await import("@/lib/export/pdf");
       downloadBlob(await exportPdf(payload, design, preset), `${base}.pdf`);
+      counted(`pdf-${preset}`);
       return "PDF downloaded";
     });
 
@@ -67,6 +75,7 @@ export const ExportBar = memo(function ExportBar({ payload, design, scanLevel }:
     run("card", async () => {
       const { exportCard } = await import("@/lib/export/card");
       const result = await shareOrDownload(await exportCard(payload, design), `${base}-card.png`);
+      if (result !== "cancelled") counted("card");
       return result === "downloaded" ? "Phone card downloaded" : undefined;
     });
 
@@ -75,6 +84,7 @@ export const ExportBar = memo(function ExportBar({ payload, design, scanLevel }:
       const { exportPng } = await import("@/lib/export/image");
       // Pass a promise so Safari keeps the user-gesture context.
       await navigator.clipboard.write([new ClipboardItem({ "image/png": exportPng(payload, design) })]);
+      counted("copy");
       return "Copied to clipboard";
     });
 

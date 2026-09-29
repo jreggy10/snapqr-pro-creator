@@ -3,6 +3,7 @@ import { CalendarDays, Contact, Link2, Mail, MessageSquare, Type, Wifi, type Luc
 import type { QRDesignActions } from "@/hooks/use-qr-design";
 import type { QRDataByType, QRType } from "@/lib/qr/types";
 import { cn } from "@/lib/utils";
+import { track } from "@/lib/analytics";
 import { EmailForm, SmsForm, TextForm, UrlForm } from "./forms/SimpleForms";
 import { WifiForm } from "./forms/WifiForm";
 import { VCardForm } from "./forms/VCardForm";
@@ -36,7 +37,11 @@ export const ContentPanel = memo(function ContentPanel({ type, data, setType, se
             type="button"
             role="tab"
             aria-selected={type === value}
-            onClick={() => setType(value)}
+            onClick={() => {
+              if (value === type) return;
+              setType(value);
+              track("qr-type", { type: value });
+            }}
             className={cn(
               "flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-panel",
