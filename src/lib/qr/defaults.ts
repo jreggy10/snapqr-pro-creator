@@ -1,0 +1,42 @@
+import type { QRDesign } from "./types";
+
+export const DEFAULT_DESIGN: QRDesign = {
+  version: 1,
+  type: "url",
+  data: {
+    url: { url: "" },
+    text: { text: "" },
+    wifi: { ssid: "", password: "", encryption: "WPA", hidden: false },
+    vcard: {
+      firstName: "",
+      lastName: "",
+      org: "",
+      title: "",
+      phone: "",
+      email: "",
+      website: "",
+      street: "",
+      city: "",
+      region: "",
+      postcode: "",
+      country: "",
+    },
+    event: { title: "", location: "", description: "", allDay: false, start: "", end: "" },
+    email: { to: "", subject: "", body: "" },
+    sms: { phone: "", message: "" },
+  },
+  style: {
+    fg: "#111111",
+    bg: "#ffffff",
+    dotStyle: "square",
+    cornerSquareStyle: "square",
+    cornerDotStyle: "square",
+    logo: null,
+    logoSize: 0.25,
+    margin: 4,
+    ecc: "M",
+    size: 1024,
+  },
+  caption: "",
+  card: { title: "", subtitle: "", theme: "light" },
+};
