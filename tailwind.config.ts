@@ -14,6 +14,21 @@ export default {
     },
     extend: {
       colors: {
+        // Role tokens only; the Bevel palette behind them lives in index.css.
+        canvas: "hsl(var(--canvas))",
+        surface: "hsl(var(--surface))",
+        panel: "hsl(var(--panel))",
+        ink: "hsl(var(--ink))",
+        "ink-muted": "hsl(var(--ink-muted))",
+        action: {
+          DEFAULT: "hsl(var(--action))",
+          foreground: "hsl(var(--action-foreground))",
+        },
+        selected: {
+          DEFAULT: "hsl(var(--selected))",
+          foreground: "hsl(var(--selected-foreground))",
+        },
+        success: "hsl(var(--success))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

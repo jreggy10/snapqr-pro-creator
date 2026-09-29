@@ -81,36 +81,46 @@ export const ExportBar = memo(function ExportBar({ payload, design, scanLevel }:
   const icon = (job: Job, Idle: typeof Download) =>
     busy === job ? <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden /> : <Idle className="mr-2 h-4 w-4" aria-hidden />;
 
+  const segment =
+    "h-10 flex-1 rounded-full px-3 text-sm font-medium text-ink hover:bg-surface disabled:text-ink-muted disabled:hover:bg-transparent";
+
   return (
-    <div className="space-y-2">
-      <div className="grid grid-cols-3 gap-2">
-        <Button onClick={png} disabled={disabled} className="btn-gradient text-white">
+    <div className="space-y-3">
+      <div role="group" aria-label="Download" className="flex items-center gap-1 rounded-full bg-panel p-1">
+        <Button onClick={png} disabled={disabled} variant="ghost" className={segment}>
           {icon("png", Download)}PNG
         </Button>
-        <Button onClick={svg} disabled={disabled} variant="outline">
+        <Button onClick={svg} disabled={disabled} variant="ghost" className={segment}>
           {icon("svg", Download)}SVG
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button disabled={disabled} variant="outline">
+            <Button disabled={disabled} variant="ghost" className={segment}>
               {icon("pdf", FileText)}PDF
               <ChevronDown className="ml-1 h-3.5 w-3.5 opacity-60" aria-hidden />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" className="rounded-2xl p-1.5">
             {PDF_OPTIONS.map((o) => (
-              <DropdownMenuItem key={o.value} onSelect={() => pdf(o.value)}>
+              <DropdownMenuItem key={o.value} className="rounded-xl" onSelect={() => pdf(o.value)}>
                 {o.label}
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="grid grid-cols-[1fr_auto] gap-2">
-        <Button onClick={card} disabled={disabled} variant="secondary">
+      <div className="flex items-center gap-2">
+        <Button onClick={card} disabled={disabled} className="h-12 flex-1 rounded-full bg-action text-base text-action-foreground hover:bg-action/90">
           {icon("card", Smartphone)}Save phone card
         </Button>
-        <Button onClick={copy} disabled={disabled} variant="ghost" aria-label="Copy PNG to clipboard">
+        <Button
+          onClick={copy}
+          disabled={disabled}
+          variant="ghost"
+          size="icon"
+          className="h-12 w-12 rounded-full bg-panel text-ink hover:bg-panel/70"
+          aria-label="Copy PNG to clipboard"
+        >
           {busy === "copy" ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : <Copy className="h-4 w-4" aria-hidden />}
         </Button>
       </div>

@@ -9,39 +9,45 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      <header className="gradient-header text-white">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-6 sm:px-6 sm:py-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <QrCode className="h-8 w-8" aria-hidden />
-              <span className="text-2xl font-bold tracking-tight">SnapQR</span>
+      <header className="hero-backdrop">
+        <div className="mx-auto max-w-6xl px-4 pb-14 pt-6 sm:px-6 sm:pb-20">
+          <nav className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5 text-ink">
+              <QrCode className="h-7 w-7" aria-hidden />
+              <span className="text-xl font-semibold tracking-tight">SnapQR</span>
             </div>
             <Button
               variant="ghost"
               size="icon"
-              className="text-white hover:bg-white/20 hover:text-white"
+              className="rounded-full text-ink hover:bg-surface/60"
               onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
               aria-label="Toggle theme"
             >
               {resolvedTheme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
-          </div>
-          <div className="space-y-3">
-            <h1 className="max-w-2xl text-3xl font-bold leading-tight sm:text-4xl">
+          </nav>
+          <div className="mt-12 max-w-3xl space-y-5 sm:mt-16">
+            <h1 className="text-4xl font-semibold leading-[1.05] text-ink sm:text-6xl">
               Beautiful QR codes for your church, nonprofit, or event.
             </h1>
-            <TrustPromise className="text-white/90" />
+            <p className="max-w-xl text-lg text-ink-muted sm:text-xl">
+              Make it, style it, and save it to your phone in under a minute.
+            </p>
+            <TrustPromise className="pt-1 text-ink" />
           </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
+      <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
         <QRGenerator />
       </main>
 
-      <footer className="mx-auto max-w-6xl space-y-2 px-4 pb-10 text-sm text-muted-foreground sm:px-6">
-        <TrustPromise />
+      <footer className="mx-auto max-w-6xl space-y-2 px-4 pb-14 text-ink-muted sm:px-6">
+        <TrustPromise className="[&>li]:bg-panel" />
         <p>Everything runs in your browser. Your content and logo never leave your device.</p>
+        <p className="pt-6 text-sm">
+          Made by <span className="font-medium text-ink">JRMedia</span>
+        </p>
       </footer>
     </div>
   );

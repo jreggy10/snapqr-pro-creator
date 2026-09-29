@@ -36,20 +36,22 @@ export const QRPreview = memo(function QRPreview({ payload, style, moduleCount, 
   }, [hasPayload]);
 
   return (
-    <div className="mx-auto w-full max-w-[320px] overflow-hidden rounded-2xl border border-border shadow-sm" style={{ background: style.bg }}>
-      {hasPayload ? (
-        <div ref={hostRef} className="aspect-square w-full [&>svg]:h-full [&>svg]:w-full" role="img" aria-label="QR code preview" />
-      ) : (
-        <div className="flex aspect-square w-full flex-col items-center justify-center gap-3 bg-muted/50 p-8 text-center text-sm text-muted-foreground">
-          <QrCode className="h-12 w-12 opacity-40" aria-hidden />
-          Fill in the details and your code appears here.
-        </div>
-      )}
-      {caption.trim() && hasPayload ? (
-        <p className="px-4 pb-4 text-center text-base font-semibold" style={{ color: style.fg }}>
-          {caption}
-        </p>
-      ) : null}
+    <div className="rounded-3xl bg-surface p-5 shadow-hero">
+      <div className="mx-auto w-full max-w-[340px] overflow-hidden rounded-2xl" style={{ background: hasPayload ? style.bg : undefined }}>
+        {hasPayload ? (
+          <div ref={hostRef} className="aspect-square w-full [&>svg]:h-full [&>svg]:w-full" role="img" aria-label="QR code preview" />
+        ) : (
+          <div className="flex aspect-square w-full flex-col items-center justify-center gap-3 bg-panel p-8 text-center text-ink-muted">
+            <QrCode className="h-12 w-12 opacity-40" aria-hidden />
+            Fill in the details and your code appears here.
+          </div>
+        )}
+        {caption.trim() && hasPayload ? (
+          <p className="px-4 pb-4 text-center text-base font-semibold" style={{ color: style.fg }}>
+            {caption}
+          </p>
+        ) : null}
+      </div>
     </div>
   );
 });

@@ -10,7 +10,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import type { QRDesignActions } from "@/hooks/use-qr-design";
 import { readLogoFile } from "@/lib/qr/logo";
 import type { QRStyle } from "@/lib/qr/types";
-import { cn } from "@/lib/utils";
+import { Panel, PillOption } from "./Panel";
 
 const DOT_STYLES: { value: DotType; label: string }[] = [
   { value: "square", label: "Square" },
@@ -32,12 +32,16 @@ const CORNER_DOT_STYLES: { value: CornerDotType; label: string }[] = [
   { value: "dot", label: "Circle" },
 ];
 
-const PRESETS: { name: string; swatch: [string, string]; style: Partial<QRStyle> }[] = [
-  { name: "Classic", swatch: ["#111111", "#ffffff"], style: { fg: "#111111", bg: "#ffffff", dotStyle: "square", cornerSquareStyle: "square", cornerDotStyle: "square" } },
-  { name: "Friendly", swatch: ["#1e3a8a", "#ffffff"], style: { fg: "#1e3a8a", bg: "#ffffff", dotStyle: "rounded", cornerSquareStyle: "extra-rounded", cornerDotStyle: "dot" } },
-  { name: "Dots", swatch: ["#0f172a", "#f8fafc"], style: { fg: "#0f172a", bg: "#f8fafc", dotStyle: "dots", cornerSquareStyle: "dot", cornerDotStyle: "dot" } },
-  { name: "Warm", swatch: ["#7c2d12", "#fff7ed"], style: { fg: "#7c2d12", bg: "#fff7ed", dotStyle: "classy-rounded", cornerSquareStyle: "extra-rounded", cornerDotStyle: "square" } },
-  { name: "Forest", swatch: ["#14532d", "#f0fdf4"], style: { fg: "#14532d", bg: "#f0fdf4", dotStyle: "extra-rounded", cornerSquareStyle: "extra-rounded", cornerDotStyle: "dot" } },
+/**
+ * Bevel quick styles. The chip swatch shows the pure accent; the QR itself
+ * uses a deeper shade so it stays well above scanning contrast.
+ */
+const PRESETS: { name: string; swatch: string; style: Partial<QRStyle> }[] = [
+  { name: "Classic", swatch: "#222326", style: { fg: "#222326", bg: "#ffffff", dotStyle: "square", cornerSquareStyle: "square", cornerDotStyle: "square" } },
+  { name: "Metric", swatch: "#415eee", style: { fg: "#415eee", bg: "#ffffff", dotStyle: "rounded", cornerSquareStyle: "extra-rounded", cornerDotStyle: "dot" } },
+  { name: "Lilac", swatch: "#b9a6ff", style: { fg: "#5b3fd6", bg: "#f6f3ff", dotStyle: "dots", cornerSquareStyle: "dot", cornerDotStyle: "dot" } },
+  { name: "Coral", swatch: "#ffab94", style: { fg: "#b8401f", bg: "#fff5f1", dotStyle: "classy-rounded", cornerSquareStyle: "extra-rounded", cornerDotStyle: "square" } },
+  { name: "Green", swatch: "#31ce01", style: { fg: "#1d7a00", bg: "#f4fbef", dotStyle: "extra-rounded", cornerSquareStyle: "extra-rounded", cornerDotStyle: "dot" } },
 ];
 
 interface ChoiceRowProps<T extends string> {
@@ -49,23 +53,13 @@ interface ChoiceRowProps<T extends string> {
 
 function ChoiceRow<T extends string>({ label, options, value, onChange }: ChoiceRowProps<T>) {
   return (
-    <fieldset className="space-y-1.5">
-      <legend className="text-sm font-medium">{label}</legend>
+    <fieldset className="space-y-2">
+      <legend className="mb-2 text-sm font-medium text-ink">{label}</legend>
       <div className="flex flex-wrap gap-1.5">
         {options.map((o) => (
-          <button
-            key={o.value}
-            type="button"
-            aria-pressed={value === o.value}
-            onClick={() => onChange(o.value)}
-            className={cn(
-              "rounded-md border px-2.5 py-1 text-xs font-medium transition-colors",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-              value === o.value ? "border-primary bg-primary/10 text-primary" : "border-border hover:bg-accent",
-            )}
-          >
+          <PillOption key={o.value} active={value === o.value} onClick={() => onChange(o.value)}>
             {o.label}
-          </button>
+          </PillOption>
         ))}
       </div>
     </fieldset>
@@ -99,7 +93,7 @@ function ColorField({ id, label, value, onChange }: ColorFieldProps) {
           type="color"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="h-9 w-9 shrink-0 cursor-pointer rounded border border-input bg-transparent"
+          className="h-10 w-10 shrink-0 cursor-pointer overflow-hidden rounded-full border border-input bg-surface p-0.5 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-full [&::-webkit-color-swatch]:border-0 [&::-moz-color-swatch]:rounded-full [&::-moz-color-swatch]:border-0"
         />
         <Input
           aria-label={`${label} hex`}
@@ -110,7 +104,7 @@ function ColorField({ id, label, value, onChange }: ColorFieldProps) {
             if (HEX6_RE.test(next)) onChange(next.toLowerCase());
           }}
           onBlur={() => setDraft(value)}
-          className="h-9 font-mono text-xs"
+          className="h-10 rounded-full font-mono text-xs"
           maxLength={7}
           spellCheck={false}
         />
@@ -141,25 +135,20 @@ export const StylePanel = memo(function StylePanel({ style, caption, setStyle, s
   };
 
   return (
-    <section aria-labelledby="style-heading" className="space-y-5">
-      <h2 id="style-heading" className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-        2. Make it yours
-      </h2>
+    <Panel step={2} title="Make it yours" titleId="style-heading">
+      <div className="space-y-6">
 
       <div className="space-y-1.5">
-        <span className="text-sm font-medium">Quick styles</span>
+        <span className="text-sm font-medium text-ink">Quick styles</span>
         <div className="flex flex-wrap gap-2">
           {PRESETS.map((p) => (
             <button
               key={p.name}
               type="button"
               onClick={() => setStyle(p.style)}
-              className="flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-xs font-medium hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex items-center gap-2 rounded-full bg-surface py-1.5 pl-1.5 pr-3.5 text-sm font-medium text-ink transition-colors hover:bg-surface/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-panel"
             >
-              <span className="flex h-4 w-4 overflow-hidden rounded-full border border-border" aria-hidden>
-                <span className="h-full w-1/2" style={{ background: p.swatch[0] }} />
-                <span className="h-full w-1/2" style={{ background: p.swatch[1] }} />
-              </span>
+              <span className="h-5 w-5 rounded-full" style={{ background: p.swatch }} aria-hidden />
               {p.name}
             </button>
           ))}
@@ -178,21 +167,21 @@ export const StylePanel = memo(function StylePanel({ style, caption, setStyle, s
       </div>
 
       <div className="space-y-2">
-        <span className="text-sm font-medium">Logo</span>
+        <span className="text-sm font-medium text-ink">Logo</span>
         <div className="flex items-center gap-3">
           {style.logo ? (
             <>
-              <img src={style.logo} alt="Uploaded logo" className="h-12 w-12 rounded border border-border bg-white object-contain p-1" />
-              <Button type="button" variant="outline" size="sm" onClick={() => fileRef.current?.click()}>
+              <img src={style.logo} alt="Uploaded logo" className="h-12 w-12 rounded-2xl bg-white object-contain p-1.5" />
+              <Button type="button" variant="outline" size="sm" className="rounded-full" onClick={() => fileRef.current?.click()}>
                 Replace
               </Button>
-              <Button type="button" variant="ghost" size="sm" onClick={() => setStyle({ logo: null })}>
+              <Button type="button" variant="ghost" size="sm" className="rounded-full" onClick={() => setStyle({ logo: null })}>
                 <X className="mr-1 h-4 w-4" aria-hidden />
                 Remove
               </Button>
             </>
           ) : (
-            <Button type="button" variant="outline" size="sm" onClick={() => fileRef.current?.click()}>
+            <Button type="button" variant="outline" size="sm" className="rounded-full" onClick={() => fileRef.current?.click()}>
               <ImagePlus className="mr-2 h-4 w-4" aria-hidden />
               Upload logo
             </Button>
@@ -205,7 +194,7 @@ export const StylePanel = memo(function StylePanel({ style, caption, setStyle, s
             <Slider value={[style.logoSize]} min={0.1} max={0.5} step={0.01} onValueChange={([logoSize]) => setStyle({ logoSize })} />
           </div>
         ) : null}
-        <p className="text-xs text-muted-foreground">Your logo stays on your device. Nothing is uploaded.</p>
+        <p className="text-sm text-ink-muted">Your logo stays on your device. Nothing is uploaded.</p>
       </div>
 
       <div className="space-y-1.5">
@@ -215,7 +204,7 @@ export const StylePanel = memo(function StylePanel({ style, caption, setStyle, s
 
       <Accordion type="single" collapsible>
         <AccordionItem value="advanced" className="border-b-0">
-          <AccordionTrigger className="py-2 text-sm">Advanced</AccordionTrigger>
+          <AccordionTrigger className="py-2 text-sm font-medium text-ink hover:no-underline">Advanced</AccordionTrigger>
           <AccordionContent className="space-y-4 pt-2">
             <div className="space-y-1.5">
               <Label>Quiet zone: {style.margin} modules</Label>
@@ -239,6 +228,7 @@ export const StylePanel = memo(function StylePanel({ style, caption, setStyle, s
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-    </section>
+      </div>
+    </Panel>
   );
 });
