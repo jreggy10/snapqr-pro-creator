@@ -1,6 +1,8 @@
 # SnapQR
 
-A modern, feature-rich QR code generator built with React and TypeScript. Generate custom QR codes instantly — add logos, pick colors, adjust resolution, and export as PNG or SVG.
+A clean, ad-free QR code generator for churches, nonprofits, and small events. Make polished, shareable codes without a marketing budget.
+
+**No ads. No expiring codes. No signup.** Everything runs in your browser, and your content and logo never leave your device.
 
 **[Live Demo →](https://qr.jregs.com)**
 
@@ -9,33 +11,25 @@ A modern, feature-rich QR code generator built with React and TypeScript. Genera
 
 ## Features
 
-- **Instant QR Generation** — generate from any text or URL
-- **Color Customization** — set custom foreground and background colors
-- **Logo Embedding** — embed any image URL as a centered logo
-- **Custom Text** — add a label below the QR code
-- **Adjustable Resolution** — export from 100px to 1000px
-- **PNG & SVG Export** — download as raster or vector, or copy to clipboard
-- **Dark Mode** — toggle light/dark theme
-- **Responsive** — works on desktop and mobile
-- **Keyboard Shortcut** — press Enter to generate
+- **7 code types:** link, WiFi, contact card (vCard), calendar event, email, SMS, and plain text
+- **Styling:** colors, dot styles, corner styles, one-click presets, and logo upload
+- **Scannability check:** a live badge warns before a design becomes hard to scan. It checks contrast, logo size, quiet zone, and density, then test-decodes the rendered code at three sizes.
+- **Exports:** PNG (up to 4096px), SVG (vector, with the caption as real text), PDF (US Letter, A4, or a 4×6 sign), and copy to clipboard
+- **Phone card:** a 1080×1920 "show this" image. On phones it opens the share sheet so you can save it straight to your camera roll.
+- **Remembers your last design** in this browser
+- **Dark mode** and a responsive layout
 
 ## Tech Stack
 
-- [React 18](https://react.dev/) + TypeScript
-- [Vite](https://vitejs.dev/) (build tool)
+- [React 18](https://react.dev/) + TypeScript, built with [Vite](https://vitejs.dev/)
 - [shadcn/ui](https://ui.shadcn.com/) + [Tailwind CSS](https://tailwindcss.com/)
-- [qrcode.react](https://github.com/zpao/qrcode.react) (QR generation)
-- [next-themes](https://github.com/pacocoursey/next-themes) (dark mode)
-- [Lucide React](https://lucide.dev/) (icons)
+- [qr-code-styling](https://github.com/kozakdenys/qr-code-styling) (rendering), [jsQR](https://github.com/cozmo/jsQR) (scan check)
+- [jsPDF](https://github.com/parallax/jsPDF) + [svg2pdf.js](https://github.com/yWorks/svg2pdf.js) (vector PDF, loaded on demand)
+- [Vitest](https://vitest.dev/) (tests)
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js v18 or higher
-- npm, yarn, or bun
-
-### Installation
+Requires Node.js 18 or later.
 
 ```bash
 git clone https://github.com/jreggy10/snapqr-pro-creator.git
@@ -44,36 +38,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:8080](http://localhost:8080) in your browser.
-
-## Usage
-
-### Basic
-
-1. Enter any text or URL in the input field
-2. Click **Generate QR Code** or press Enter
-3. Your QR code appears instantly
-
-### Advanced Options
-
-Expand **Advanced Options** to access:
-
-| Option | Description |
-|--------|-------------|
-| Custom Text | Label displayed below the QR code |
-| Logo URL | Image URL to embed as a centered logo |
-| Show Logo | Toggle logo visibility |
-| Foreground Color | QR code dot color |
-| Background Color | QR code background color |
-| Export Resolution | Output size in pixels (100–1000px) |
-
-### Export
-
-| Button | Output |
-|--------|--------|
-| Copy | Copies QR code to clipboard as PNG |
-| PNG | Downloads a PNG file at selected resolution |
-| SVG | Downloads a scalable vector SVG |
+Open [http://localhost:8080](http://localhost:8080).
 
 ## Available Scripts
 
@@ -82,6 +47,7 @@ npm run dev       # Start dev server
 npm run build     # Production build
 npm run preview   # Preview production build
 npm run lint      # Run ESLint
+npm test          # Run unit tests
 ```
 
 ## Project Structure
@@ -89,19 +55,21 @@ npm run lint      # Run ESLint
 ```
 src/
 ├── components/
-│   ├── QRGenerator.tsx    # Main QR code generator
-│   └── ui/                # shadcn/ui components
+│   ├── QRGenerator.tsx      # Page composition: panels + preview
+│   ├── TrustPromise.tsx
+│   ├── qr/                  # ContentPanel, StylePanel, CardPanel, QRPreview, ScanBadge, ExportBar
+│   │   └── forms/           # One form per code type
+│   └── ui/                  # shadcn/ui components
 ├── hooks/
-│   ├── use-mobile.tsx
-│   └── use-toast.ts
+│   ├── use-qr-design.ts     # Design state + localStorage persistence
+│   └── use-scannability.ts  # Heuristics + debounced test decode
 ├── lib/
-│   └── utils.ts
-├── pages/
-│   ├── Index.tsx
-│   └── NotFound.tsx
-├── App.tsx
-└── main.tsx
+│   ├── qr/                  # QRDesign type, payload encoders, renderer options, scannability
+│   └── export/              # PNG/SVG, PDF, phone card, file helpers
+└── pages/
 ```
+
+The whole design is one `QRDesign` object (`src/lib/qr/types.ts`). A saved library or brand kit can store it as is.
 
 ## Deployment
 
