@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design system: "Bevel" (see _design-systems/snapqr-design-system-bevel.md).
-   Almost monochrome shell: white canvas, ink text, pale "cloud" panels.
-   Saturated accents are for swatches and small indicators only.
+/* Design system: "Bevel" (see docs/design-system.md).
+   Three layers: palette (Bevel names) -> roles -> components.
+   Components use only role tokens, so a theme change is an edit here.
    All colors are HSL channels so Tailwind's hsl(var(--x) / <alpha>) works. */
 
 @layer base {
@@ -22,27 +22,38 @@
     --hero-sky: linear-gradient(180deg, #d2e5ff 0%, #fff9ee 100%);
     --shadow-hero: 0 0 16px -8px rgba(0, 0, 0, 0.25);
 
+    /* Roles: components use only these (see docs/design-system.md). */
+    --canvas: var(--paper);
+    --surface: var(--paper);
+    --panel: var(--cloud);
+    --ink-muted: var(--body-gray);
+    --action: var(--charcoal);
+    --action-foreground: var(--cloud);
+    --selected: var(--metric-blue);
+    --selected-foreground: 0 0% 100%;
+    --success: var(--recovery-green);
+
     /* shadcn roles mapped onto the palette */
-    --background: var(--paper);
+    --background: var(--canvas);
     --foreground: var(--ink);
 
-    --card: var(--cloud);
+    --card: var(--panel);
     --card-foreground: var(--ink);
 
-    --popover: var(--paper);
+    --popover: var(--surface);
     --popover-foreground: var(--ink);
 
-    --primary: var(--charcoal);
-    --primary-foreground: var(--cloud);
+    --primary: var(--action);
+    --primary-foreground: var(--action-foreground);
 
-    --secondary: var(--cloud);
+    --secondary: var(--panel);
     --secondary-foreground: var(--ink);
 
-    --muted: var(--cloud);
-    --muted-foreground: var(--body-gray);
+    --muted: var(--panel);
+    --muted-foreground: var(--ink-muted);
 
     --accent: 230 83% 96%;
-    --accent-foreground: var(--metric-blue);
+    --accent-foreground: var(--selected);
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
@@ -50,7 +61,7 @@
     /* Inputs sit on cloud panels, so they're white with a hairline. */
     --border: 217 30% 88%;
     --input: 217 30% 88%;
-    --ring: var(--metric-blue);
+    --ring: var(--selected);
 
     --radius: 1.5rem;
 
@@ -74,7 +85,7 @@
     --hero-sky: linear-gradient(180deg, #1a2238 0%, #14151a 100%);
     --shadow-hero: 0 0 24px -8px rgba(0, 0, 0, 0.8);
 
-    --primary-foreground: 228 9% 13%;
+    --action-foreground: 228 9% 13%;
     --accent: 230 40% 20%;
     --accent-foreground: 230 90% 75%;
     --destructive: 0 70% 55%;
@@ -111,7 +122,7 @@
 }
 
 @layer components {
-  .hero-sky {
+  .hero-backdrop {
     background: var(--hero-sky);
   }
 

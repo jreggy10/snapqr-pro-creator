@@ -36,12 +36,12 @@ export const QRPreview = memo(function QRPreview({ payload, style, moduleCount, 
   }, [hasPayload]);
 
   return (
-    <div className="rounded-3xl bg-paper p-5 shadow-hero">
+    <div className="rounded-3xl bg-surface p-5 shadow-hero">
       <div className="mx-auto w-full max-w-[340px] overflow-hidden rounded-2xl" style={{ background: hasPayload ? style.bg : undefined }}>
         {hasPayload ? (
           <div ref={hostRef} className="aspect-square w-full [&>svg]:h-full [&>svg]:w-full" role="img" aria-label="QR code preview" />
         ) : (
-          <div className="flex aspect-square w-full flex-col items-center justify-center gap-3 bg-cloud p-8 text-center text-body-gray">
+          <div className="flex aspect-square w-full flex-col items-center justify-center gap-3 bg-panel p-8 text-center text-ink-muted">
             <QrCode className="h-12 w-12 opacity-40" aria-hidden />
             Fill in the details and your code appears here.
           </div>

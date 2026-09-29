@@ -11,8 +11,8 @@ export function TrustPromise({ className }: { className?: string }) {
   return (
     <ul className={cn("flex flex-wrap items-center gap-2 text-sm font-medium", className)}>
       {PROMISES.map(({ icon: Icon, text }) => (
-        <li key={text} className="flex items-center gap-1.5 rounded-full bg-paper/70 px-3.5 py-1.5">
-          <Icon className="h-4 w-4 text-metric-blue" aria-hidden />
+        <li key={text} className="flex items-center gap-1.5 rounded-full bg-surface/70 px-3.5 py-1.5">
+          <Icon className="h-4 w-4 text-selected" aria-hidden />
           {text}
         </li>
       ))}

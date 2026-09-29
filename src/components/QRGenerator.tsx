@@ -34,7 +34,7 @@ export const QRGenerator = () => {
         <QRPreview payload={livePayload} style={liveStyle} moduleCount={report.moduleCount} caption={design.caption} />
         {livePayload ? <ScanBadge report={report} checking={checking} /> : null}
         <ExportBar payload={payload} design={design} scanLevel={report.level} />
-        <Button variant="ghost" size="sm" className="w-full rounded-full text-body-gray" onClick={reset}>
+        <Button variant="ghost" size="sm" className="w-full rounded-full text-ink-muted" onClick={reset}>
           <RotateCcw className="mr-2 h-3.5 w-3.5" aria-hidden />
           Start over
         </Button>

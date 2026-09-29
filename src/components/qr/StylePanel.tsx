@@ -93,7 +93,7 @@ function ColorField({ id, label, value, onChange }: ColorFieldProps) {
           type="color"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="h-10 w-10 shrink-0 cursor-pointer overflow-hidden rounded-full border border-input bg-paper p-0.5 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-full [&::-webkit-color-swatch]:border-0 [&::-moz-color-swatch]:rounded-full [&::-moz-color-swatch]:border-0"
+          className="h-10 w-10 shrink-0 cursor-pointer overflow-hidden rounded-full border border-input bg-surface p-0.5 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-full [&::-webkit-color-swatch]:border-0 [&::-moz-color-swatch]:rounded-full [&::-moz-color-swatch]:border-0"
         />
         <Input
           aria-label={`${label} hex`}
@@ -146,7 +146,7 @@ export const StylePanel = memo(function StylePanel({ style, caption, setStyle, s
               key={p.name}
               type="button"
               onClick={() => setStyle(p.style)}
-              className="flex items-center gap-2 rounded-full bg-paper py-1.5 pl-1.5 pr-3.5 text-sm font-medium text-ink transition-colors hover:bg-paper/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-cloud"
+              className="flex items-center gap-2 rounded-full bg-surface py-1.5 pl-1.5 pr-3.5 text-sm font-medium text-ink transition-colors hover:bg-surface/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-panel"
             >
               <span className="h-5 w-5 rounded-full" style={{ background: p.swatch }} aria-hidden />
               {p.name}
@@ -194,7 +194,7 @@ export const StylePanel = memo(function StylePanel({ style, caption, setStyle, s
             <Slider value={[style.logoSize]} min={0.1} max={0.5} step={0.01} onValueChange={([logoSize]) => setStyle({ logoSize })} />
           </div>
         ) : null}
-        <p className="text-sm text-body-gray">Your logo stays on your device. Nothing is uploaded.</p>
+        <p className="text-sm text-ink-muted">Your logo stays on your device. Nothing is uploaded.</p>
       </div>
 
       <div className="space-y-1.5">

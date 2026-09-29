@@ -4,7 +4,7 @@ import type { ScanReport } from "@/lib/qr/scannability";
 import { cn } from "@/lib/utils";
 
 const COPY = {
-  ok: { label: "Scans well", icon: CheckCircle2, className: "bg-recovery-green/10", iconClass: "text-recovery-green" },
+  ok: { label: "Scans well", icon: CheckCircle2, className: "bg-success/10", iconClass: "text-success" },
   warn: { label: "May be hard to scan", icon: AlertTriangle, className: "bg-amber-400/15", iconClass: "text-amber-500" },
   fail: { label: "Won't scan reliably", icon: XCircle, className: "bg-destructive/10", iconClass: "text-destructive" },
 } as const;
@@ -24,7 +24,7 @@ export const ScanBadge = memo(function ScanBadge({ report, checking }: ScanBadge
         {checking ? <Loader2 className="ml-auto h-3.5 w-3.5 animate-spin opacity-60" aria-label="Checking" /> : null}
       </div>
       {report.issues.length ? (
-        <ul className="mt-1.5 space-y-1 pl-6 text-[13px] text-body-gray">
+        <ul className="mt-1.5 space-y-1 pl-6 text-[13px] text-ink-muted">
           {report.issues.map((issue) => (
             <li key={issue.message} className="list-disc">
               {issue.message}

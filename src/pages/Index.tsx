@@ -9,7 +9,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      <header className="hero-sky">
+      <header className="hero-backdrop">
         <div className="mx-auto max-w-6xl px-4 pb-14 pt-6 sm:px-6 sm:pb-20">
           <nav className="flex items-center justify-between">
             <div className="flex items-center gap-2.5 text-ink">
@@ -19,7 +19,7 @@ const Index = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full text-ink hover:bg-paper/60"
+              className="rounded-full text-ink hover:bg-surface/60"
               onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
               aria-label="Toggle theme"
             >
@@ -30,7 +30,7 @@ const Index = () => {
             <h1 className="text-4xl font-semibold leading-[1.05] text-ink sm:text-6xl">
               Beautiful QR codes for your church, nonprofit, or event.
             </h1>
-            <p className="max-w-xl text-lg text-body-gray sm:text-xl">
+            <p className="max-w-xl text-lg text-ink-muted sm:text-xl">
               Make it, style it, and save it to your phone in under a minute.
             </p>
             <TrustPromise className="pt-1 text-ink" />
@@ -42,8 +42,8 @@ const Index = () => {
         <QRGenerator />
       </main>
 
-      <footer className="mx-auto max-w-6xl space-y-2 px-4 pb-14 text-body-gray sm:px-6">
-        <TrustPromise className="[&>li]:bg-cloud" />
+      <footer className="mx-auto max-w-6xl space-y-2 px-4 pb-14 text-ink-muted sm:px-6">
+        <TrustPromise className="[&>li]:bg-panel" />
         <p>Everything runs in your browser. Your content and logo never leave your device.</p>
       </footer>
     </div>

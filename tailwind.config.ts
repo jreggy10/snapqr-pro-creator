@@ -14,15 +14,21 @@ export default {
     },
     extend: {
       colors: {
-        paper: "hsl(var(--paper))",
-        charcoal: "hsl(var(--charcoal))",
+        // Role tokens only; the Bevel palette behind them lives in index.css.
+        canvas: "hsl(var(--canvas))",
+        surface: "hsl(var(--surface))",
+        panel: "hsl(var(--panel))",
         ink: "hsl(var(--ink))",
-        cloud: "hsl(var(--cloud))",
-        "body-gray": "hsl(var(--body-gray))",
-        "metric-blue": "hsl(var(--metric-blue))",
-        "sleep-lilac": "hsl(var(--sleep-lilac))",
-        "coral-signal": "hsl(var(--coral-signal))",
-        "recovery-green": "hsl(var(--recovery-green))",
+        "ink-muted": "hsl(var(--ink-muted))",
+        action: {
+          DEFAULT: "hsl(var(--action))",
+          foreground: "hsl(var(--action-foreground))",
+        },
+        selected: {
+          DEFAULT: "hsl(var(--selected))",
+          foreground: "hsl(var(--selected-foreground))",
+        },
+        success: "hsl(var(--success))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

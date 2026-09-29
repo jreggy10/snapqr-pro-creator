@@ -74,7 +74,7 @@ export const CardPanel = memo(function CardPanel({ payload, design, setCard }: C
             </div>
           </fieldset>
         </div>
-        <div className="mx-auto aspect-[9/16] w-[132px] overflow-hidden rounded-[20px] bg-paper">
+        <div className="mx-auto aspect-[9/16] w-[132px] overflow-hidden rounded-[20px] bg-surface">
           {thumb ? <img src={thumb} alt="Phone card preview" className="h-full w-full object-cover" /> : null}
         </div>
       </div>

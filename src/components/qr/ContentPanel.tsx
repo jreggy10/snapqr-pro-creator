@@ -39,8 +39,8 @@ export const ContentPanel = memo(function ContentPanel({ type, data, setType, se
             onClick={() => setType(value)}
             className={cn(
               "flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-cloud",
-              type === value ? "bg-metric-blue text-white" : "bg-paper text-body-gray hover:text-ink",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-panel",
+              type === value ? "bg-selected text-selected-foreground" : "bg-surface text-ink-muted hover:text-ink",
             )}
           >
             <Icon className="h-4 w-4" aria-hidden />
