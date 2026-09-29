@@ -9,6 +9,7 @@ import { Slider } from "@/components/ui/slider";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import type { QRDesignActions } from "@/hooks/use-qr-design";
 import { readLogoFile } from "@/lib/qr/logo";
+import { track } from "@/lib/analytics";
 import type { QRStyle } from "@/lib/qr/types";
 import { Panel, PillOption } from "./Panel";
 
@@ -129,6 +130,7 @@ export const StylePanel = memo(function StylePanel({ style, caption, setStyle, s
     if (!file) return;
     try {
       setStyle({ logo: await readLogoFile(file) });
+      track("logo-upload", {});
     } catch (err) {
       toast.error((err as Error).message);
     }
@@ -145,7 +147,10 @@ export const StylePanel = memo(function StylePanel({ style, caption, setStyle, s
             <button
               key={p.name}
               type="button"
-              onClick={() => setStyle(p.style)}
+              onClick={() => {
+                setStyle(p.style);
+                track("preset", { name: p.name });
+              }}
               className="flex items-center gap-2 rounded-full bg-surface py-1.5 pl-1.5 pr-3.5 text-sm font-medium text-ink transition-colors hover:bg-surface/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-panel"
             >
               <span className="h-5 w-5 rounded-full" style={{ background: p.swatch }} aria-hidden />

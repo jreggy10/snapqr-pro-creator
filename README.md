@@ -4,6 +4,8 @@ A clean, ad-free QR code generator for churches, nonprofits, and small events. M
 
 **No ads. No expiring codes. No signup.** Everything runs in your browser, and your content and logo never leave your device.
 
+**Analytics:** the live site uses cookieless [Umami](https://umami.is) to count visits and which features get used (QR type, download format, quick style, and whether a logo or the scan check was involved). Events carry fixed labels only, never what you put in a code; see `src/lib/analytics.ts`. Localhost and deploy previews aren't tracked.
+
 **[Live Demo →](https://qr.jregs.com)**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)

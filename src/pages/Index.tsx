@@ -45,6 +45,7 @@ const Index = () => {
       <footer className="mx-auto max-w-6xl space-y-2 px-4 pb-14 text-ink-muted sm:px-6">
         <TrustPromise className="[&>li]:bg-panel" />
         <p>Everything runs in your browser. Your content and logo never leave your device.</p>
+        <p>We count anonymous visits and which features get used, with no cookies. Never what you put in a code.</p>
         <p className="pt-6 text-sm">
           Made by <span className="font-medium text-ink">JRMedia</span>
         </p>
