@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_DESIGN } from "./defaults";
-import { encodeEmail, encodeEvent, encodeSms, encodeUrl, encodeVCard, encodeWifi } from "./payloads";
+import { encodeEmail, encodeEvent, encodeSms, encodeUrl, encodeVCard, encodeWifi, wifiPasswordIssue } from "./payloads";
 
 const vcard = DEFAULT_DESIGN.data.vcard;
 
@@ -31,6 +31,29 @@ describe("encodeWifi", () => {
   });
   it("is empty without an SSID", () => {
     expect(encodeWifi({ ssid: "", password: "x", encryption: "WPA", hidden: false })).toBe("");
+  });
+});
+
+describe("wifiPasswordIssue", () => {
+  const wifi = (password: string, encryption: "WPA" | "WEP" | "nopass" = "WPA") => ({ ssid: "Net", password, encryption, hidden: false });
+
+  it("flags WPA passwords outside 8–63 characters", () => {
+    expect(wifiPasswordIssue(wifi("short"))).toMatch(/at least 8/);
+    expect(wifiPasswordIssue(wifi("x".repeat(64)))).toMatch(/at most 63/);
+    expect(wifiPasswordIssue(wifi("welcome123"))).toBeNull();
+    expect(wifiPasswordIssue(wifi("x".repeat(63)))).toBeNull();
+  });
+  it("accepts a 64-digit hex WPA key", () => {
+    expect(wifiPasswordIssue(wifi("a1".repeat(32)))).toBeNull();
+  });
+  it("checks WEP key lengths", () => {
+    expect(wifiPasswordIssue(wifi("abcde", "WEP"))).toBeNull();
+    expect(wifiPasswordIssue(wifi("0123456789", "WEP"))).toBeNull();
+    expect(wifiPasswordIssue(wifi("abcdef", "WEP"))).toMatch(/WEP/);
+  });
+  it("ignores open networks and an empty password", () => {
+    expect(wifiPasswordIssue(wifi("x", "nopass"))).toBeNull();
+    expect(wifiPasswordIssue(wifi(""))).toBeNull();
   });
 });
 

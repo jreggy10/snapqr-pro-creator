@@ -27,6 +27,27 @@ export function encodeText({ text }: TextData): string {
 
 const escapeWifi = (s: string) => s.replace(WIFI_SPECIAL_RE, "\\$1");
 
+const HEX_RE = /^[0-9a-f]+$/i;
+
+/**
+ * Phones silently refuse to join with a malformed key, so flag it up front.
+ * WPA: 8–63 character passphrase, or a 64-digit hex key.
+ * WEP: 5 or 13 characters, or a 10- or 26-digit hex key.
+ */
+export function wifiPasswordIssue({ password, encryption }: WifiData): string | null {
+  if (encryption === "nopass" || !password) return null;
+  const len = password.length;
+  if (encryption === "WPA") {
+    if (len === 64 && HEX_RE.test(password)) return null;
+    if (len < 8) return "WPA passwords are at least 8 characters. Phones won't join with a shorter one.";
+    if (len > 63) return "WPA passwords are at most 63 characters.";
+    return null;
+  }
+  if (len === 5 || len === 13) return null;
+  if ((len === 10 || len === 26) && HEX_RE.test(password)) return null;
+  return "WEP keys are 5 or 13 characters (or 10 or 26 hex digits).";
+}
+
 export function encodeWifi({ ssid, password, encryption, hidden }: WifiData): string {
   if (!ssid) return "";
   let out = `WIFI:T:${encryption};S:${escapeWifi(ssid)};`;
