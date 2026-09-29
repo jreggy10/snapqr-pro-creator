@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { useDebouncedValue } from "@/hooks/use-debounced-value";
 import { useQRDesign } from "@/hooks/use-qr-design";
 import { useScannability } from "@/hooks/use-scannability";
@@ -24,26 +22,19 @@ export const QRGenerator = () => {
   const { report, checking } = useScannability(livePayload, liveStyle);
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
-      <Card className="card-shadow">
-        <CardContent className="space-y-8 p-5 sm:p-6">
-          <ContentPanel type={design.type} data={design.data} setType={setType} setData={setData} />
-          <Separator />
-          <StylePanel style={design.style} caption={design.caption} setStyle={setStyle} setCaption={setCaption} />
-          <Separator />
-          <CardPanel payload={livePayload} design={design} setCard={setCard} />
-        </CardContent>
-      </Card>
+    <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_400px] lg:items-start">
+      <div className="space-y-10">
+        <ContentPanel type={design.type} data={design.data} setType={setType} setData={setData} />
+        <StylePanel style={design.style} caption={design.caption} setStyle={setStyle} setCaption={setCaption} />
+        <CardPanel payload={livePayload} design={design} setCard={setCard} />
+      </div>
 
-      <aside className="space-y-4 lg:sticky lg:top-6" aria-label="Preview and download">
-        <Card className="card-shadow">
-          <CardContent className="space-y-4 p-5">
-            <QRPreview payload={livePayload} style={liveStyle} moduleCount={report.moduleCount} caption={design.caption} />
-            {livePayload ? <ScanBadge report={report} checking={checking} /> : null}
-            <ExportBar payload={payload} design={design} scanLevel={report.level} />
-          </CardContent>
-        </Card>
-        <Button variant="ghost" size="sm" className="w-full text-muted-foreground" onClick={reset}>
+      {/* Sticky only when the whole column fits, so downloads never get stranded below the fold. */}
+      <aside className="space-y-5 lg:[@media(min-height:760px)]:sticky lg:[@media(min-height:760px)]:top-8" aria-label="Preview and download">
+        <QRPreview payload={livePayload} style={liveStyle} moduleCount={report.moduleCount} caption={design.caption} />
+        {livePayload ? <ScanBadge report={report} checking={checking} /> : null}
+        <ExportBar payload={payload} design={design} scanLevel={report.level} />
+        <Button variant="ghost" size="sm" className="w-full rounded-full text-body-gray" onClick={reset}>
           <RotateCcw className="mr-2 h-3.5 w-3.5" aria-hidden />
           Start over
         </Button>

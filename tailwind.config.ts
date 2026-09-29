@@ -14,6 +14,15 @@ export default {
     },
     extend: {
       colors: {
+        paper: "hsl(var(--paper))",
+        charcoal: "hsl(var(--charcoal))",
+        ink: "hsl(var(--ink))",
+        cloud: "hsl(var(--cloud))",
+        "body-gray": "hsl(var(--body-gray))",
+        "metric-blue": "hsl(var(--metric-blue))",
+        "sleep-lilac": "hsl(var(--sleep-lilac))",
+        "coral-signal": "hsl(var(--coral-signal))",
+        "recovery-green": "hsl(var(--recovery-green))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

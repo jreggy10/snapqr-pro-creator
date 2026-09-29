@@ -7,6 +7,7 @@ import { EmailForm, SmsForm, TextForm, UrlForm } from "./forms/SimpleForms";
 import { WifiForm } from "./forms/WifiForm";
 import { VCardForm } from "./forms/VCardForm";
 import { EventForm } from "./forms/EventForm";
+import { Panel } from "./Panel";
 
 const TYPES: { value: QRType; label: string; icon: LucideIcon }[] = [
   { value: "url", label: "Link", icon: Link2 },
@@ -27,11 +28,8 @@ interface ContentPanelProps {
 
 export const ContentPanel = memo(function ContentPanel({ type, data, setType, setData }: ContentPanelProps) {
   return (
-    <section aria-labelledby="content-heading" className="space-y-4">
-      <h2 id="content-heading" className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-        1. What should it open?
-      </h2>
-      <div role="tablist" aria-label="QR code type" className="grid grid-cols-4 gap-2 sm:grid-cols-7">
+    <Panel step={1} title="What should it open?" titleId="content-heading">
+      <div role="tablist" aria-label="QR code type" className="mb-6 flex flex-wrap gap-2">
         {TYPES.map(({ value, label, icon: Icon }) => (
           <button
             key={value}
@@ -40,14 +38,12 @@ export const ContentPanel = memo(function ContentPanel({ type, data, setType, se
             aria-selected={type === value}
             onClick={() => setType(value)}
             className={cn(
-              "flex flex-col items-center gap-1 rounded-lg border px-2 py-2.5 text-xs font-medium transition-colors",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-              type === value
-                ? "border-primary bg-primary/10 text-primary"
-                : "border-border text-muted-foreground hover:bg-accent hover:text-foreground",
+              "flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-cloud",
+              type === value ? "bg-metric-blue text-white" : "bg-paper text-body-gray hover:text-ink",
             )}
           >
-            <Icon className="h-5 w-5" aria-hidden />
+            <Icon className="h-4 w-4" aria-hidden />
             {label}
           </button>
         ))}
@@ -61,6 +57,6 @@ export const ContentPanel = memo(function ContentPanel({ type, data, setType, se
         {type === "email" ? <EmailForm data={data.email} onChange={(p) => setData("email", p)} /> : null}
         {type === "sms" ? <SmsForm data={data.sms} onChange={(p) => setData("sms", p)} /> : null}
       </div>
-    </section>
+    </Panel>
   );
 });

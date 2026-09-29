@@ -2,105 +2,85 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Design system: "Bevel" (see _design-systems/snapqr-design-system-bevel.md).
+   Almost monochrome shell: white canvas, ink text, pale "cloud" panels.
+   Saturated accents are for swatches and small indicators only.
+   All colors are HSL channels so Tailwind's hsl(var(--x) / <alpha>) works. */
 
 @layer base {
   :root {
-    --background: 220 40% 98%;
-    --foreground: 222.2 84% 4.9%;
+    /* Bevel palette */
+    --paper: 0 0% 100%;            /* #ffffff */
+    --charcoal: 228 9% 13%;        /* #1f2025 */
+    --ink: 228 6% 14%;             /* #222326 */
+    --cloud: 217 47% 95%;          /* #ebf0f8 */
+    --body-gray: 216 2% 46%;       /* #747679 */
+    --metric-blue: 230 83% 59%;    /* #415eee */
+    --sleep-lilac: 253 100% 83%;   /* #b9a6ff */
+    --coral-signal: 13 100% 79%;   /* #ffab94 */
+    --recovery-green: 102 99% 41%; /* #31ce01 */
+    --hero-sky: linear-gradient(180deg, #d2e5ff 0%, #fff9ee 100%);
+    --shadow-hero: 0 0 16px -8px rgba(0, 0, 0, 0.25);
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* shadcn roles mapped onto the palette */
+    --background: var(--paper);
+    --foreground: var(--ink);
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --card: var(--cloud);
+    --card-foreground: var(--ink);
 
-    --primary: 250 70% 60%;
-    --primary-foreground: 0 0% 100%;
+    --popover: var(--paper);
+    --popover-foreground: var(--ink);
 
-    --secondary: 210 70% 55%;
-    --secondary-foreground: 0 0% 100%;
+    --primary: var(--charcoal);
+    --primary-foreground: var(--cloud);
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --secondary: var(--cloud);
+    --secondary-foreground: var(--ink);
 
-    --accent: 250 90% 95%;
-    --accent-foreground: 250 70% 60%;
+    --muted: var(--cloud);
+    --muted-foreground: var(--body-gray);
 
-    --destructive: 0 84.2% 60.2%;
+    --accent: 230 83% 96%;
+    --accent-foreground: var(--metric-blue);
+
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 250 70% 60%;
+    /* Inputs sit on cloud panels, so they're white with a hairline. */
+    --border: 217 30% 88%;
+    --input: 217 30% 88%;
+    --ring: var(--metric-blue);
 
-    --radius: 0.75rem;
-    
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(210, 70%, 55%) 0%, hsl(250, 70%, 60%) 100%);
-    --gradient-bg: linear-gradient(180deg, hsl(210, 90%, 96%) 0%, hsl(250, 90%, 96%) 100%);
-    
-    /* Shadows */
-    --shadow-card: 0 4px 20px hsl(250 70% 60% / 0.1);
-    --shadow-hover: 0 8px 30px hsl(250 70% 60% / 0.15);
-    
-    /* Transitions */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-    --radius: 0.75rem;
+    --radius: 1.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
+  /* Bevel is a light system; dark mode keeps the same structure in low light. */
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --paper: 228 10% 8%;
+    --ink: 220 20% 94%;
+    --cloud: 225 12% 14%;
+    --body-gray: 220 8% 64%;
+    --charcoal: 217 47% 95%;
+    --hero-sky: linear-gradient(180deg, #1a2238 0%, #14151a 100%);
+    --shadow-hero: 0 0 24px -8px rgba(0, 0, 0, 0.8);
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --primary-foreground: 228 9% 13%;
+    --accent: 230 40% 20%;
+    --accent-foreground: 230 90% 75%;
+    --destructive: 0 70% 55%;
+    --border: 225 10% 22%;
+    --input: 225 10% 22%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 250 70% 60%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 210 70% 55%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 240 20% 20%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 250 70% 60%;
-    
-    --gradient-primary: linear-gradient(135deg, hsl(210, 70%, 55%) 0%, hsl(250, 70%, 60%) 100%);
-    --gradient-bg: linear-gradient(180deg, hsl(222.2, 84%, 4.9%) 0%, hsl(250, 40%, 10%) 100%);
-    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.3);
-    --shadow-hover: 0 8px 30px hsl(0 0% 0% / 0.4);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -118,34 +98,25 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply text-foreground;
-    background: var(--gradient-bg);
+    @apply bg-background text-foreground antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, "Segoe UI", Roboto, sans-serif;
     min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.03em;
   }
 }
 
 @layer components {
-  .gradient-header {
-    background: var(--gradient-primary);
+  .hero-sky {
+    background: var(--hero-sky);
   }
-  
-  .card-shadow {
-    box-shadow: var(--shadow-card);
-    transition: var(--transition-smooth);
-  }
-  
-  .card-shadow:hover {
-    box-shadow: var(--shadow-hover);
-  }
-  
-  .btn-gradient {
-    background: var(--gradient-primary);
-    color: white;
-    transition: var(--transition-smooth);
-  }
-  
-  .btn-gradient:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
+
+  /* The QR preview is the page's "product hero": the only lifted surface. */
+  .shadow-hero {
+    box-shadow: var(--shadow-hero);
   }
 }
